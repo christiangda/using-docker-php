@@ -13,7 +13,12 @@ docker build --rm \
 docker run --tty --interactive --rm --name myapp \
   --publish 80:80 \
   christiangda/myapp:latest
+```
 
-docker push christiangda/kafka:openjdk-8-2.10-0.10.2.1
-docker push christiangda/kafka:2.10-0.10.2.1
+running my php local app, assuming it is in `.`
+```
+docker run --tty --interactive --rm --name myapp \
+  --publish 80:80 \}
+  --volume .:/var/www/html
+  christiangda/myapp:latest
 ```
