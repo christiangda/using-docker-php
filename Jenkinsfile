@@ -1,6 +1,6 @@
 pipeline {
-    // Using Dockerfile from git repo
-    agent { dockerfile true }
+
+    agent none
 
     stages {
         stage('Clean workspace') {
@@ -15,12 +15,13 @@ pipeline {
             }
         }
         stage('Build image') {
+            agent {
+                docker { image 'docker' }
+            }
             steps {
                 // Use official docker container to build my docker image
                 // Its is neccessary because we are using a Jenkins official images without docker installed inside
-                docker.image("docker").inside {
-                    sh 'docker build'
-                }
+                sh 'docker build'
             }
         }
 
