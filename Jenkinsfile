@@ -16,12 +16,10 @@ pipeline {
         }
         stage('Build image') {
             agent {
-                docker { image 'docker' }
+                docker { image 'maven:3-alpine' }
             }
             steps {
-                // Use official docker container to build my docker image
-                // Its is neccessary because we are using a Jenkins official images without docker installed inside
-                sh 'docker build'
+                sh 'docker build .'
             }
         }
 
