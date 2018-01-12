@@ -3,6 +3,10 @@ pipeline {
     agent { dockerfile true }
 
     stages {
+        stage('Clean workspace') {
+            deleteDir()
+            sh 'ls -lah'
+        }
         stage('Clone repository') {
             checkout scm
         }
