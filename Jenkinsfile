@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        docker { 
+            image 'docker'
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
+        }
+    }
     stages {
         stage('Clean workspace') {
             steps {
@@ -13,27 +18,21 @@ pipeline {
             }
         }
         stage('Build image') {
-            agent {
-                docker { 
-                    image 'docker'
-                    args '-v /var/run/docker.sock:/var/run/docker.sock'
-                }
-            }
             steps {
                 sh 'docker build .'
             }
         }
 
-        // stage('Test image') {
-        //     app.inside {
-        //         sh '#echo APP_NAME=$APP_NAME'
-        //         sh '#echo APP_VERSION=$APP_VERSION'            }
-        // }
-        // stage('Push image') {
-        //     docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
-        //         app.push("${env.BUILD_NUMBER}")
-        //         app.push("latest")
-        //     }
-        // }        
-    }
+    // stage('Test image') {
+    //     app.inside {
+    //         sh '#echo APP_NAME=$APP_NAME'
+    //         sh '#echo APP_VERSION=$APP_VERSION'            }
+    // }
+    // stage('Push image') {
+    //     docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+    //         app.push("${env.BUILD_NUMBER}")
+    //         app.push("latest")
+    //     }
+    // }        
+}
 }
