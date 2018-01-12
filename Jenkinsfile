@@ -4,14 +4,14 @@ pipeline {
 
     // Use official docker container to build my docker image
     // Its is neccessary because we are using a Jenkins official images without docker installed inside
-    def docker-cmd = docker.image("docker")
+    def dockerimg = docker.image("docker")
 
     stages {
         stage('Clone repository') {
             checkout scm
         }
         stage('Build image') {
-             docker-cmd.inside {
+             dockerimg.inside {
                  sh 'docker build'
              }
         }
