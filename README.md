@@ -29,6 +29,15 @@ CI
 cd
 mkdir -p $HOME/docker/volumes/jenkins/home
 
-docker run -p 8080:8080 -p 50000:50000 -v $HOME/docker/volumes/jenkins/home:/var/jenkins_home jenkins/jenkins:lts
+docker run -d --name jenkinslts -p 8080:8080 -p 50000:50000 -v $HOME/docker/volumes/jenkins/home:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock jenkins/jenkins:lts
+
+docker run \
+  --name jenkinsblue \
+  -d \
+  -u root \
+  -p 8080:8080 \
+  -v $HOME/docker/volumes/jenkins/home:/var/jenkins_home \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  jenkinsci/blueocean
 ```
 

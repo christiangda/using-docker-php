@@ -4,18 +4,24 @@ pipeline {
 
     stages {
         stage('Clean workspace') {
-            deleteDir()
-            sh 'ls -lah'
+            steps {
+                deleteDir()
+                sh 'ls -lah'
+            }
         }
         stage('Clone repository') {
-            checkout scm
+            steps {
+                checkout scm
+            }
         }
         stage('Build image') {
-            // Use official docker container to build my docker image
-            // Its is neccessary because we are using a Jenkins official images without docker installed inside
-            docker.image("docker").inside {
-                 sh 'docker build'
-             }
+            steps {
+                // Use official docker container to build my docker image
+                // Its is neccessary because we are using a Jenkins official images without docker installed inside
+                docker.image("docker").inside {
+                    sh 'docker build'
+                }
+            }
         }
 
         // stage('Test image') {
