@@ -2,16 +2,14 @@ pipeline {
     // Using Dockerfile from git repo
     agent { dockerfile true }
 
-    // Use official docker container to build my docker image
-    // Its is neccessary because we are using a Jenkins official images without docker installed inside
-    def dockerimg = docker.image("docker")
-
     stages {
         stage('Clone repository') {
             checkout scm
         }
         stage('Build image') {
-             dockerimg.inside {
+            // Use official docker container to build my docker image
+            // Its is neccessary because we are using a Jenkins official images without docker installed inside
+            docker.image("docker").inside {
                  sh 'docker build'
              }
         }
