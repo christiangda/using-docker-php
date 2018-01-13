@@ -1,38 +1,12 @@
 pipeline {
     agent {
-        docker { 
-            image 'docker'
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
-        }
+        docker { image 'node:7-alpine' }
     }
     stages {
-        stage('Clean workspace') {
+        stage('Test') {
             steps {
-                deleteDir()
-                sh 'ls -lah'
+                sh 'node --version'
             }
         }
-        stage('Clone repository') {
-            steps {
-                checkout scm
-            }
-        }
-        stage('Build image') {
-            steps {
-                sh 'docker build .'
-            }
-        }
-
-    // stage('Test image') {
-    //     app.inside {
-    //         sh '#echo APP_NAME=$APP_NAME'
-    //         sh '#echo APP_VERSION=$APP_VERSION'            }
-    // }
-    // stage('Push image') {
-    //     docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
-    //         app.push("${env.BUILD_NUMBER}")
-    //         app.push("latest")
-    //     }
-    // }        
-}
+    }
 }
