@@ -1,14 +1,12 @@
 pipeline {
-    agent {
-        docker { 
-            image 'docker:latest' 
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
-            }
-    }
     stages {
-        stage('Test') {
-            steps {
-                sh 'docker --version'
+        node {
+            checkout scm
+
+            docker.withServer('unix:///var/run/docker.sock') {
+                docker.image('docker:latest').withRun('-v /var/run/docker.sock:/var/run/docker.sock') {
+                    sh 'docker --version'
+                }
             }
         }
     }
