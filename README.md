@@ -31,7 +31,8 @@ mkdir -p $HOME/docker/volumes/jenkins/home
 
 docker run \
   --name jenkinsblue \
-  -group-add=$(stat -c %g /var/run/docker.sock) 
+  -group-add=$(stat -c %g /var/run/docker.sock) \
+  --privileged \
   -d \
   -p 8080:8080 \
   -v $HOME/docker/volumes/jenkins/home:/var/jenkins_home \
@@ -40,7 +41,8 @@ docker run \
 
 docker run \
   --name jenkinslts \
-  -group-add=$(stat -c %g /var/run/docker.sock) 
+  --group-add=$(stat -c %g /var/run/docker.sock) \
+  --privileged \
   -d \
   -p 8080:8080 \
   -v $HOME/docker/volumes/jenkins/home:/var/jenkins_home \
